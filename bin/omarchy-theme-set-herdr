@@ -29,7 +29,7 @@ if [[ -n $theme_osc ]]; then
     # simply redraw, so this remains safe while omarchy-restart-herdr provides
     # the config-reload fallback.
     kill -WINCH "$herdr_pid" 2>/dev/null || true
-  done < <(pgrep -x herdr 2>/dev/null || true)
+  done < <(pgrep -u "$UID" -x herdr 2>/dev/null || true)
 fi
 
 omarchy-restart-herdr
