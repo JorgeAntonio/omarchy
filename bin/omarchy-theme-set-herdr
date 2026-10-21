@@ -5,7 +5,7 @@
 
 COLORS_TOML="$HOME/.local/state/omarchy/current/theme/colors.toml"
 
-command -v herdr >/dev/null 2>&1 || exit 0
+omarchy-cmd-present herdr || exit 0
 [[ -f $COLORS_TOML ]] || exit 0
 [[ $(herdr status server --json 2>/dev/null | jq -r '.running') == "true" ]] || exit 0
 

@@ -79,22 +79,22 @@ rm -f "$commands/omarchy-theme-set-herdr"
 cat >"$commands/omarchy-theme-set-herdr" <<'STUB'
 #!/bin/bash
 echo herdr-start >>"$TEST_LOG"
-if [[ ${TEST_HERDR_HOLD:-} == 1 ]]; then
+if [[ ${TEST_HERDR_HOLD:-} == "1" ]]; then
   touch "$TEST_TMP/herdr-started"
   for attempt in {1..150}; do
     [[ ! -f $TEST_TMP/herdr-release ]] || break
     sleep 0.02
   done
 fi
-[[ ${TEST_HERDR_FAIL:-} != 1 ]] || exit 1
+[[ ${TEST_HERDR_FAIL:-} != "1" ]] || exit 1
 echo herdr-done >>"$TEST_LOG"
 STUB
 # Simulate a timeout without making every test wait five seconds.
 cat >"$commands/timeout" <<'STUB'
 #!/bin/bash
-if [[ $1 == 5 && $2 == omarchy-theme-set-herdr ]]; then
+if [[ $1 == "5" && $2 == "omarchy-theme-set-herdr" ]]; then
   echo herdr-timeout-5 >>"$TEST_LOG"
-  [[ ${TEST_HERDR_TIMEOUT:-} != 1 ]] || exit 124
+  [[ ${TEST_HERDR_TIMEOUT:-} != "1" ]] || exit 124
 fi
 exec /usr/bin/timeout "$@"
 STUB
